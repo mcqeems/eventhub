@@ -1,0 +1,47 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model events {
+  id           Int            @id @default(autoincrement()) @db.UnsignedInt
+  name         String         @db.VarChar(255)
+  date         DateTime       @db.Date
+  location     String         @db.VarChar(255)
+  max          Int?
+  min          Int            @default(1)
+  created_at   DateTime       @default(now()) @db.Timestamp(0)
+  participants participants[]
+}
+
+model participants {
+  id         Int      @id @default(autoincrement()) @db.UnsignedInt
+  name       String   @db.VarChar(255)
+  email      String   @db.VarChar(255)
+  institusi  String   @db.VarChar(255)
+  jurusan    String   @db.VarChar(255)
+  semester   Int
+  event_id   Int      @db.UnsignedInt
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  events     events   @relation(fields: [event_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "participants_ibfk_1")
+
+  @@index([event_id], map: "event_id")
+}
+
+model users {
+  id         Int        @id @default(autoincrement()) @db.UnsignedInt
+  username   String     @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  role       users_role @default(STAFF)
+  created_at DateTime   @default(now()) @db.Timestamp(0)
+}
+
+enum users_role {
+  STAFF
+  ADMIN
+}
