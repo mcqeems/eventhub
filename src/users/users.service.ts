@@ -15,6 +15,15 @@ export class UsersService {
     return data ?? undefined;
   }
 
+  async findOneById(id: number): Promise<users | undefined> {
+    const data = await this.prisma.users.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    return data ?? undefined;
+  }
+
   async createOne(
     username: string,
     password: string,

@@ -21,5 +21,6 @@ import { HashingService } from './hashing/hashing.service';
   ],
   controllers: [AuthController],
   providers: [AuthService, HashingService],
+  exports: [AuthService],
 })
 export class AuthModule {}
