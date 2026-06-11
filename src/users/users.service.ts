@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { users } from 'src/generated/prisma/client';
+import { Prisma } from 'src/generated/prisma/client';
 
 @Injectable()
 export class UsersService {
@@ -28,13 +29,22 @@ export class UsersService {
     username: string,
     password: string,
   ): Promise<users | undefined> {
-    const data = await this.prisma.users.create({
-      data: {
-        username: username,
-        password: password,
-      },
-    });
+    try {
+      const data = await this.prisma.users.create({
+        data: {
+          username: username,
+          password: password,
+        },
+      });
 
-    return data ?? undefined;
+      return data ?? undefined;
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ConflictException('This username already been taken.');
+        }
+      }
+      throw error;
+    }
   }
 }
