@@ -22,7 +22,7 @@ export class AuthService {
   ): Promise<{ user: users; accessToken: string }> {
     const user = await this.usersService.findOne(username);
 
-    if (user?.password !== password) {
+    if (!user) {
       throw new UnauthorizedException();
     }
 
@@ -30,6 +30,10 @@ export class AuthService {
       password,
       user.password,
     );
+
+    if (!auth) {
+      throw new UnauthorizedException();
+    }
 
     const payload = { sub: user.id, username: user.username };
     return {
