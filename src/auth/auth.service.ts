@@ -1,6 +1,5 @@
 import {
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -74,14 +73,16 @@ export class AuthService {
     data: { user: users };
   }> {
     if (secretKey !== process.env.SECRET_KEY) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Secret Key is incorrect.');
     }
 
     const hashPassword = await this.hashingService.hashPassword(password);
     const user = await this.usersService.createOne(username, hashPassword);
 
     if (!user || user === undefined) {
-      throw new InternalServerErrorException();
+      throw new NotFoundException(
+        "Database can't find the recent registered user.",
+      );
     }
 
     return {
