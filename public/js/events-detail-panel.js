@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   const pathParts = window.location.pathname.split('/');
   const eventId = pathParts[pathParts.length - 1];
   const container = document.getElementById('eventDetailContent');
-  
+
   try {
     const res = await fetch(`/api/events/${eventId}`);
     const data = await res.json();
     const ev = data.data || data;
-    
+
     if (res.ok && ev) {
       container.innerHTML = `
         <div style="margin-bottom: var(--spacing-lg);">
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
               <tr><th style="padding: 16px 0; border-bottom: 1px solid var(--colors-hairline);">Location</th><td style="padding: 16px 0; text-align: right; border-bottom: 1px solid var(--colors-hairline);">${ev.location}</td></tr>
               <tr><th style="padding: 16px 0; border-bottom: 1px solid var(--colors-hairline);">Max Participants</th><td style="padding: 16px 0; text-align: right; border-bottom: 1px solid var(--colors-hairline);">${ev.max || 'N/A'}</td></tr>
               <tr><th style="padding: 16px 0; border-bottom: 1px solid var(--colors-hairline);">Min Participants</th><td style="padding: 16px 0; text-align: right; border-bottom: 1px solid var(--colors-hairline);">${ev.min}</td></tr>
+              <tr><th style="padding: 16px 0; border-bottom: 1px solid var(--colors-hairline);">Registered Participants</th><td style="padding: 16px 0; text-align: right; border-bottom: 1px solid var(--colors-hairline);">${ev._count.participants}</td></tr>
             </tbody>
           </table>
         </div>
@@ -29,19 +30,21 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
       `;
     } else {
-      container.innerHTML = '<p class="typography-body-md" style="color: var(--colors-danger);">Event not found.</p>';
+      container.innerHTML =
+        '<p class="typography-body-md" style="color: var(--colors-danger);">Event not found.</p>';
     }
-  } catch(err) {
+  } catch (err) {
     console.error(err);
-    container.innerHTML = '<p class="typography-body-md" style="color: var(--colors-danger);">Failed to load event details.</p>';
+    container.innerHTML =
+      '<p class="typography-body-md" style="color: var(--colors-danger);">Failed to load event details.</p>';
   }
 });
 
 async function deleteEvent(id) {
-  if(!confirm('Are you sure you want to delete this event?')) return;
+  if (!confirm('Are you sure you want to delete this event?')) return;
   try {
     const res = await fetch(`/api/events/${id}`, { method: 'DELETE' });
-    if(res.ok) {
+    if (res.ok) {
       window.location.href = '/panel/events';
     } else {
       const errData = await res.json();
