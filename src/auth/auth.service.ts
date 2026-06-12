@@ -95,4 +95,15 @@ export class AuthService {
       },
     };
   }
+
+  async signOut(
+    response: Response,
+  ): Promise<{ status: number; message: string }> {
+    response.clearCookie('access_token');
+
+    return {
+      status: 200,
+      message: 'User successfully signed out.',
+    };
+  }
 }
