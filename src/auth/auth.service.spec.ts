@@ -78,4 +78,14 @@ describe('AuthService', () => {
       expect(result.data.user.username).toBe('john');
     });
   });
+
+  describe('signOut', () => {
+    it('should clear cookie and return success message', async () => {
+      const mockRes = { clearCookie: jest.fn() } as unknown as Response;
+      const result = await service.signOut(mockRes);
+      expect(mockRes.clearCookie).toHaveBeenCalledWith('access_token');
+      expect(result.status).toBe(200);
+      expect(result.message).toBe('User successfully signed out.');
+    });
+  });
 });
