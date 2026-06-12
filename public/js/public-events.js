@@ -1,6 +1,13 @@
 async function loadPublicEvents() {
   try {
-    const res = await fetch('/api/events');
+    const searchParams = new URLSearchParams(window.location.search);
+    const searchName = searchParams.get('name');
+    if (searchName) {
+      const input = document.getElementById('searchName');
+      if (input) input.value = searchName;
+    }
+
+    const res = await fetch('/api/events' + window.location.search);
     const data = await res.json();
     const list = document.getElementById('publicEventsList');
     list.innerHTML = '';

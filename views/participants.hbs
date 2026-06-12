@@ -3,6 +3,29 @@
   style='margin-bottom: var(--spacing-xl);'
 >Manage Participants</h1>
 
+<div style="margin-bottom: var(--spacing-md);">
+  <button id="toggleFiltersBtn" class="typography-body-strong" style="background: none; border: none; color: var(--colors-ink); cursor: pointer; padding: 0; font-family: inherit;">[+] Search Filters</button>
+</div>
+
+<form id="panelSearchForm" method="GET" action="/panel/participants" style="display: none; flex-direction: column; gap: var(--spacing-md); margin-bottom: var(--spacing-xl); padding: var(--spacing-lg); border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-surface-soft);">
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md);">
+    <input type="text" name="name" id="filterName" placeholder="Name" style="padding: 8px 12px; border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-canvas); color: var(--colors-ink); font-family: inherit; width: 100%; box-sizing: border-box;" />
+    <input type="text" name="email" id="filterEmail" placeholder="Email" style="padding: 8px 12px; border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-canvas); color: var(--colors-ink); font-family: inherit; width: 100%; box-sizing: border-box;" />
+    <input type="text" name="institusi" id="filterInstitusi" placeholder="Institution" style="padding: 8px 12px; border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-canvas); color: var(--colors-ink); font-family: inherit; width: 100%; box-sizing: border-box;" />
+    <input type="text" name="jurusan" id="filterJurusan" placeholder="Major" style="padding: 8px 12px; border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-canvas); color: var(--colors-ink); font-family: inherit; width: 100%; box-sizing: border-box;" />
+    <input type="number" name="semester" id="filterSemester" placeholder="Semester" style="padding: 8px 12px; border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-canvas); color: var(--colors-ink); font-family: inherit; width: 100%; box-sizing: border-box;" />
+    <div style="position: relative; display: flex; width: 100%;">
+      <input type="hidden" name="event_id" id="filterEventId" />
+      <input type="text" id="filterEventName" placeholder="Search Event Name..." autocomplete="off" style="padding: 8px 12px; border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); background: var(--colors-canvas); color: var(--colors-ink); flex: 1; font-family: inherit; width: 100%; box-sizing: border-box;" />
+      <div id="eventDropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; z-index: 10; background: var(--colors-canvas); border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm); margin-top: 4px;"></div>
+    </div>
+  </div>
+  <div style="display: flex; gap: var(--spacing-sm); justify-content: flex-end;">
+    <button type="submit" class="button-primary">Search</button>
+    <a href="/panel/participants" class="button-secondary" style="display: flex; align-items: center; justify-content: center; text-decoration: none;">Reset Filters</a>
+  </div>
+</form>
+
 <div
   style='margin-bottom: var(--spacing-xl); display: flex; justify-content: space-between; align-items: center;'
 >

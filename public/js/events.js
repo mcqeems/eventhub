@@ -1,5 +1,5 @@
 async function fetchEvents() {
-  const res = await fetch('/api/events');
+  const res = await fetch('/api/events' + window.location.search);
   const data = await res.json();
   const tbody = document.querySelector('#eventsTable tbody');
   tbody.innerHTML = '';
@@ -28,5 +28,32 @@ async function deleteEvent(id) {
   await fetch(`/api/events/${id}`, { method: 'DELETE' });
   fetchEvents();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggleFiltersBtn');
+  const searchForm = document.getElementById('panelSearchForm');
+  
+  if (toggleBtn && searchForm) {
+    toggleBtn.addEventListener('click', () => {
+      const isHidden = searchForm.style.display === 'none';
+      searchForm.style.display = isHidden ? 'flex' : 'none';
+      toggleBtn.textContent = isHidden ? '[-] Hide Filters' : '[+] Search Filters';
+    });
+    
+    const searchParams = new URLSearchParams(window.location.search);
+    const name = searchParams.get('name');
+    const date = searchParams.get('date');
+    const location = searchParams.get('location');
+    
+    if (name || date || location) {
+      searchForm.style.display = 'flex';
+      toggleBtn.textContent = '[-] Hide Filters';
+      
+      if (name) document.getElementById('filterName').value = name;
+      if (date) document.getElementById('filterDate').value = date;
+      if (location) document.getElementById('filterLocation').value = location;
+    }
+  }
+});
 
 fetchEvents();
