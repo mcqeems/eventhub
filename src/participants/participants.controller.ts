@@ -32,11 +32,13 @@ export class ParticipantsController {
     return this.participantsService.create(createParticipantDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.participantsService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.participantsService.findOne(+id);

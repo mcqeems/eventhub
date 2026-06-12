@@ -38,7 +38,15 @@ export class EventsService {
     message: string;
     data: events[];
   }> {
-    const event = await this.prismaService.events.findMany();
+    const event = await this.prismaService.events.findMany({
+      include: {
+        _count: {
+          select: {
+            participants: true,
+          },
+        },
+      },
+    });
 
     return {
       status: 200,
@@ -53,6 +61,13 @@ export class EventsService {
     const event = await this.prismaService.events.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        _count: {
+          select: {
+            participants: true,
+          },
+        },
       },
     });
 
