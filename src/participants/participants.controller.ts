@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
 import {
@@ -34,8 +35,22 @@ export class ParticipantsController {
 
   @UseGuards(AuthGuard)
   @Get()
-  findAll() {
-    return this.participantsService.findAll();
+  findAll(
+    @Query('name') name: string,
+    @Query('email') email: string,
+    @Query('institusi') institusi: string,
+    @Query('jurusan') jurusan: string,
+    @Query('semester') semester: number,
+    @Query('event_id') eventId: number,
+  ) {
+    return this.participantsService.findAllByQuery(
+      name,
+      email,
+      institusi,
+      jurusan,
+      semester,
+      eventId,
+    );
   }
 
   @UseGuards(AuthGuard)

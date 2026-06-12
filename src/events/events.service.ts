@@ -96,6 +96,13 @@ export class EventsService {
         date: date ? { equals: new Date(date) } : undefined,
         location: location ? { contains: location } : undefined,
       },
+      include: {
+        _count: {
+          select: {
+            participants: true,
+          },
+        },
+      },
     });
 
     if (!event) {

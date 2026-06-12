@@ -43,16 +43,55 @@ export class ParticipantsService {
     }
   }
 
-  async findAll(): Promise<{
+  // async findAll(): Promise<{
+  //   status: number;
+  //   message: string;
+  //   data: participants[];
+  // }> {
+  //   const participantList = await this.prismaService.participants.findMany({
+  //     include: {
+  //       events: true,
+  //     },
+  //   });
+
+  //   return {
+  //     status: 200,
+  //     message: 'Participants successfully fetched.',
+  //     data: participantList,
+  //   };
+  // }
+
+  async findAllByQuery(
+    name?: string,
+    email?: string,
+    institusi?: string,
+    jurusan?: string,
+    semester?: number,
+    eventId?: number,
+  ): Promise<{
     status: number;
     message: string;
     data: participants[];
   }> {
     const participantList = await this.prismaService.participants.findMany({
+      where: {
+        name: name ? { contains: name } : undefined,
+        email: email ? { contains: email } : undefined,
+        institusi: institusi ? { contains: institusi } : undefined,
+        jurusan: jurusan ? { contains: jurusan } : undefined,
+        semester: semester ? { equals: Number(semester) } : undefined,
+        event_id: eventId ? { equals: Number(eventId) } : undefined,
+      },
       include: {
         events: true,
       },
     });
+
+    if (!participantList) {
+      throw new NotFoundException(
+        `The corresponding participants with that query is not found.`,
+      );
+    }
 
     return {
       status: 200,
