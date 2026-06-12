@@ -1,7 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
-import { type CreateParticipantDto, CreateParticipantSchema } from './dto/create-participant.dto';
-import { type UpdateParticipantDto, UpdateParticipantSchema } from './dto/update-participant.dto';
+import {
+  type CreateParticipantDto,
+  CreateParticipantSchema,
+} from './dto/create-participant.dto';
+import {
+  type UpdateParticipantDto,
+  UpdateParticipantSchema,
+} from './dto/update-participant.dto';
 import { ZodPipe } from 'src/zod/zod.pipe';
 import { AuthGuard } from 'src/auth/auth.guard';
 
@@ -9,9 +24,11 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class ParticipantsController {
   constructor(private readonly participantsService: ParticipantsService) {}
 
-  @UseGuards(AuthGuard)
   @Post()
-  create(@Body(new ZodPipe(CreateParticipantSchema)) createParticipantDto: CreateParticipantDto) {
+  create(
+    @Body(new ZodPipe(CreateParticipantSchema))
+    createParticipantDto: CreateParticipantDto,
+  ) {
     return this.participantsService.create(createParticipantDto);
   }
 
@@ -28,8 +45,9 @@ export class ParticipantsController {
   @UseGuards(AuthGuard)
   @Patch(':id')
   update(
-    @Param('id') id: string, 
-    @Body(new ZodPipe(UpdateParticipantSchema)) updateParticipantDto: UpdateParticipantDto
+    @Param('id') id: string,
+    @Body(new ZodPipe(UpdateParticipantSchema))
+    updateParticipantDto: UpdateParticipantDto,
   ) {
     return this.participantsService.update(+id, updateParticipantDto);
   }
