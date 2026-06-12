@@ -2,22 +2,19 @@
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/css/style.css' />
+    <title>{{title}} - EventHub</title>
+    <link rel='stylesheet' href='/global.css' />
   </head>
   <body>
-    <header>
-      <nav>
-        <a href='/'>Login</a>
-      </nav>
+    <header class="primary-nav">
+      <div class="primary-nav-links">
+        <a href='/' style="white-space: pre; font-size: 14px; font-weight: 700;">[ EVENTHUB ]</a>
+      </div>
     </header>
 
-    <main>
+    <main class="container section" style="max-width: 480px; padding-top: 96px;">
       {{{body}}}
     </main>
 
-    <footer>
-      <p>© 2026 EventHub</p>
-    </footer>
   </body>
 </html>

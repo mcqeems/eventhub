@@ -1,0 +1,180 @@
+/* Buttons */
+button,
+.button-primary,
+.button-secondary,
+.button-disabled,
+.button-danger {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+.button-primary {
+  background-color: var(--colors-ink);
+  color: var(--colors-on-primary);
+  padding: var(--spacing-xs) 20px;
+  border-radius: var(--rounded-sm);
+  display: inline-block;
+  text-align: center;
+}
+.button-primary:active {
+  background-color: var(--colors-ink-deep);
+}
+
+.button-secondary {
+  background-color: var(--colors-canvas);
+  color: var(--colors-ink);
+  border: 1px solid var(--colors-hairline-strong);
+  padding: var(--spacing-xs) 20px;
+  border-radius: var(--rounded-sm);
+  display: inline-block;
+  text-align: center;
+}
+
+.button-danger {
+  background-color: var(--colors-danger);
+  color: var(--colors-on-primary);
+  padding: var(--spacing-xs) 20px;
+  border-radius: var(--rounded-sm);
+  display: inline-block;
+  text-align: center;
+}
+.button-danger:active {
+  background-color: var(--colors-danger-active);
+}
+
+.button-tab {
+  background-color: transparent;
+  color: var(--colors-mute);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--rounded-none);
+}
+
+.button-tab-active {
+  color: var(--colors-ink);
+  border-bottom: 2px solid var(--colors-ash);
+}
+
+.button-disabled {
+  background-color: var(--colors-surface-card);
+  color: var(--colors-ash);
+  border-radius: var(--rounded-sm);
+  cursor: not-allowed;
+}
+
+/* Forms */
+.text-input,
+.textarea {
+  background-color: var(--colors-surface-soft);
+  color: var(--colors-ink);
+  border: 1px solid var(--colors-hairline);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--rounded-sm);
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+}
+.text-input:focus,
+.textarea:focus {
+  background-color: var(--colors-canvas);
+  border: 1px solid var(--colors-ink);
+}
+
+.textarea {
+  padding: var(--spacing-md);
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+.form-group label {
+  display: block;
+  margin-bottom: var(--spacing-xs);
+  font-weight: 700;
+}
+
+/* Badges */
+.badge-news {
+  background-color: var(--colors-surface-dark);
+  color: var(--colors-on-dark);
+  padding: 2px var(--spacing-sm);
+  border-radius: var(--rounded-sm);
+  display: inline-block;
+}
+
+.badge-section-label {
+  background-color: transparent;
+  color: var(--colors-ink);
+  border-radius: var(--rounded-none);
+  border-bottom: 1px solid var(--colors-hairline);
+  padding-bottom: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
+  display: block;
+}
+
+/* Specific Components */
+.hero-tui-mockup {
+  background-color: var(--colors-surface-dark);
+  color: var(--colors-on-dark);
+  padding: 64px 32px;
+  border-radius: var(--rounded-none);
+  max-width: 1100px;
+  margin: var(--spacing-section) auto;
+}
+
+.hero-wordmark {
+  text-align: center;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 1;
+  margin-bottom: var(--spacing-xxl);
+}
+
+.tui-prompt-row {
+  background-color: var(--colors-surface-dark-elevated);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--rounded-sm);
+  margin-bottom: var(--spacing-xxl);
+}
+
+.tui-hints {
+  color: var(--colors-ash);
+  text-align: center;
+}
+
+.list-row {
+  background-color: var(--colors-canvas);
+  color: var(--colors-body);
+  padding: var(--spacing-sm) 0;
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.faq-row {
+  background-color: var(--colors-canvas);
+  color: var(--colors-ink);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--colors-hairline);
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+/* Error/Success Messages */
+.message-box {
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-radius: var(--rounded-sm);
+  display: none; /* hidden by default */
+}
+.message-error {
+  background-color: var(--colors-surface-card);
+  color: var(--colors-danger);
+  border: 1px solid var(--colors-danger);
+}
+.message-success {
+  background-color: var(--colors-surface-card);
+  color: var(--colors-success);
+  border: 1px solid var(--colors-success);
+}

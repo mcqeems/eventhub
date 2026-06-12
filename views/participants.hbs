@@ -1,0 +1,26 @@
+<h1 class="typography-display-xl" style="margin-bottom: var(--spacing-xl);">Manage Participants</h1>
+
+<div style="margin-bottom: var(--spacing-xl); display: flex; justify-content: space-between; align-items: center;">
+  <h2 class="typography-heading-md">All Participants</h2>
+  <a href="/panel/participants/create" class="button-primary">Register Participant</a>
+</div>
+
+<table id="participantsTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Institution</th>
+      <th>Major</th>
+      <th>Semester</th>
+      <th>Event ID</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Populated by JS -->
+  </tbody>
+</table>
+
+<script src="/js/participants.js"></script>

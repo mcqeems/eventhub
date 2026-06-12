@@ -2,22 +2,43 @@
   <head>
     <meta charset='UTF-8' />
     <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/css/style.css' />
+    <title>{{title}} - EventHub Panel</title>
+    <link rel='stylesheet' href='/global.css' />
   </head>
   <body>
-    <header>
-      <nav>
-        <a href='/'>Panel</a>
-      </nav>
+    <header class='primary-nav'>
+      <div class='primary-nav-links'>
+        <a
+          href='/panel'
+          style='white-space: pre; font-size: 14px; font-weight: 700;'
+        >[ EVENTHUB PANEL ]</a>
+      </div>
+      <div class='primary-nav-links'>
+        <a
+          href='#'
+          id='logoutBtn'
+          class='typography-body-strong'
+          style='color: var(--colors-danger);'
+        >Sign Out</a>
+      </div>
     </header>
 
-    <main>
-      {{{body}}}
-    </main>
+    <div class='panel-layout'>
+      <aside class='panel-sidebar'>
+        <div
+          class='typography-heading-md section-divider'
+          style='margin-bottom: 16px;'
+        >Menu</div>
+        <a href='/panel'>[+] Dashboard</a>
+        <a href='/panel/events'>[+] Events</a>
+        <a href='/panel/participants'>[+] Participants</a>
+      </aside>
 
-    <footer>
-      <p>© 2026 EventHub</p>
-    </footer>
+      <main class='panel-content'>
+        {{{body}}}
+      </main>
+    </div>
+
+    <script src="/js/panel.js"></script>
   </body>
 </html>

@@ -1,0 +1,43 @@
+<div style="margin-bottom: var(--spacing-xl); display: flex; justify-content: space-between; align-items: center;">
+  <h1 class="typography-display-xl">{{title}}</h1>
+  <a href="/panel/participants" class="button-tab"><- Back to Participants</a>
+</div>
+
+<div class="section-divider" style="margin-bottom: var(--spacing-xl);">
+  <div id="errorBox" class="message-box message-error"></div>
+  <form id="participantForm" style="margin-bottom: var(--spacing-lg);">
+    {{#if isEdit}}
+      <input type="hidden" id="isEdit" value="true" />
+    {{else}}
+      <input type="hidden" id="isEdit" value="false" />
+    {{/if}}
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="partName" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="partEmail" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Institution</label>
+      <input type="text" id="partInstitusi" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Major</label>
+      <input type="text" id="partJurusan" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Semester</label>
+      <input type="number" id="partSemester" min="1" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Event ID</label>
+      <input type="number" id="partEventId" class="text-input" required />
+    </div>
+    <button type="submit" class="button-primary">{{#if isEdit}}Update Participant{{else}}Register Participant{{/if}}</button>
+  </form>
+</div>
+
+<script src="/js/participants-form.js"></script>

@@ -1,0 +1,20 @@
+<h1 class="typography-display-xl" style="margin-bottom: var(--spacing-xl);">Sign Up</h1>
+<div id="errorBox" class="message-box message-error"></div>
+<form id="registerForm">
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" id="username" class="text-input" required />
+  </div>
+  <div class="form-group">
+    <label>Password</label>
+    <input type="password" id="password" class="text-input" required />
+  </div>
+  <div class="form-group">
+    <label>Secret Key</label>
+    <input type="text" id="secretKey" class="text-input" required />
+  </div>
+  <button type="submit" class="button-primary">Register</button>
+  <a href="/sign-in" class="button-tab" style="margin-left: 16px;">Back to Login</a>
+</form>
+
+<script src="/js/register.js"></script>

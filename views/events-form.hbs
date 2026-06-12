@@ -1,0 +1,40 @@
+<div style="margin-bottom: var(--spacing-xl); display: flex; justify-content: space-between; align-items: center;">
+  <h1 class="typography-display-xl">{{title}}</h1>
+  <a href="/panel/events" class="button-tab"><- Back to Events</a>
+</div>
+
+<div class="section-divider" style="margin-bottom: var(--spacing-xl);">
+  <div id="errorBox" class="message-box message-error"></div>
+  <form id="eventForm" style="margin-bottom: var(--spacing-lg);">
+    <!-- We inject a hidden field if edit mode to store the ID -->
+    {{#if isEdit}}
+      <input type="hidden" id="isEdit" value="true" />
+    {{else}}
+      <input type="hidden" id="isEdit" value="false" />
+    {{/if}}
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="eventName" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" id="eventDate" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Location</label>
+      <input type="text" id="eventLocation" class="text-input" required />
+    </div>
+    <div class="form-group">
+      <label>Max Participants (Optional)</label>
+      <input type="number" id="eventMax" class="text-input" placeholder="e.g. 200" />
+    </div>
+    <div class="form-group">
+      <label>Min Participants</label>
+      <input type="number" id="eventMin" class="text-input" required />
+    </div>
+    <button type="submit" class="button-primary">{{#if isEdit}}Update Event{{else}}Create Event{{/if}}</button>
+  </form>
+</div>
+
+<script src="/js/events-form.js"></script>

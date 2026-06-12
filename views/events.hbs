@@ -1,0 +1,23 @@
+<h1 class="typography-display-xl" style="margin-bottom: var(--spacing-xl);">Manage Events</h1>
+
+<div style="margin-bottom: var(--spacing-xl); display: flex; justify-content: space-between; align-items: center;">
+  <h2 class="typography-heading-md">All Events</h2>
+  <a href="/panel/events/create" class="button-primary">Create New Event</a>
+</div>
+
+<table id="eventsTable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Populated by JS -->
+  </tbody>
+</table>
+
+<script src="/js/events.js"></script>
