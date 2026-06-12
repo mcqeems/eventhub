@@ -25,8 +25,28 @@ async function fetchEvents() {
 
 async function deleteEvent(id) {
   if(!confirm('Are you sure you want to delete this event?')) return;
-  await fetch(`/api/events/${id}`, { method: 'DELETE' });
-  fetchEvents();
+  try {
+    const res = await fetch(`/api/events/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+      const errorBox = document.getElementById('errorBox');
+      if (errorBox) errorBox.style.display = 'none';
+      fetchEvents();
+    } else {
+      const errData = await res.json();
+      const errorBox = document.getElementById('errorBox');
+      if (errorBox) {
+        errorBox.textContent = errData.message || 'Failed to delete event.';
+        errorBox.style.display = 'block';
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    const errorBox = document.getElementById('errorBox');
+    if (errorBox) {
+      errorBox.textContent = 'An error occurred while deleting the event.';
+      errorBox.style.display = 'block';
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

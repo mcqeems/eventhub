@@ -44,10 +44,19 @@ async function deleteEvent(id) {
     if(res.ok) {
       window.location.href = '/panel/events';
     } else {
-      alert('Failed to delete event');
+      const errData = await res.json();
+      const errorBox = document.getElementById('errorBox');
+      if (errorBox) {
+        errorBox.textContent = errData.message || 'Failed to delete event';
+        errorBox.style.display = 'block';
+      }
     }
   } catch (err) {
     console.error(err);
-    alert('Error deleting event');
+    const errorBox = document.getElementById('errorBox');
+    if (errorBox) {
+      errorBox.textContent = 'Error deleting event';
+      errorBox.style.display = 'block';
+    }
   }
 }

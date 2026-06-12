@@ -14,7 +14,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
       window.location.href = '/panel';
     } else {
       const errBox = document.getElementById('errorBox');
-      errBox.textContent = data.message || 'Login failed';
+      let errorMsg = data.message || 'Login failed';
+      if (data.errors && Array.isArray(data.errors)) {
+        errorMsg += ':<br/>' + data.errors.map(e => `&bull; ${e.message}`).join('<br/>');
+      }
+      errBox.innerHTML = errorMsg;
       errBox.style.display = 'block';
     }
   } catch(err) {

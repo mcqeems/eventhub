@@ -28,8 +28,28 @@ async function fetchParticipants() {
 
 async function deleteParticipant(id) {
   if (!confirm('Are you sure you want to delete this participant?')) return;
-  await fetch(`/api/participants/${id}`, { method: 'DELETE' });
-  fetchParticipants();
+  try {
+    const res = await fetch(`/api/participants/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+      const errorBox = document.getElementById('errorBox');
+      if (errorBox) errorBox.style.display = 'none';
+      fetchParticipants();
+    } else {
+      const errData = await res.json();
+      const errorBox = document.getElementById('errorBox');
+      if (errorBox) {
+        errorBox.textContent = errData.message || 'Failed to delete participant.';
+        errorBox.style.display = 'block';
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    const errorBox = document.getElementById('errorBox');
+    if (errorBox) {
+      errorBox.textContent = 'An error occurred while deleting the participant.';
+      errorBox.style.display = 'block';
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {

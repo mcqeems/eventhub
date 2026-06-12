@@ -47,10 +47,19 @@ async function deleteParticipant(id) {
     if (res.ok) {
       window.location.href = '/panel/participants';
     } else {
-      alert('Failed to delete participant');
+      const errData = await res.json();
+      const errorBox = document.getElementById('errorBox');
+      if (errorBox) {
+        errorBox.textContent = errData.message || 'Failed to delete participant';
+        errorBox.style.display = 'block';
+      }
     }
   } catch (err) {
     console.error(err);
-    alert('Error deleting participant');
+    const errorBox = document.getElementById('errorBox');
+    if (errorBox) {
+      errorBox.textContent = 'Error deleting participant';
+      errorBox.style.display = 'block';
+    }
   }
 }

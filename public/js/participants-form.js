@@ -132,9 +132,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         } else {
           const errData = await res.json();
           const errorBox = document.getElementById('errorBox');
-          errorBox.textContent =
-            errData.message ||
-            `Error ${isEdit ? 'updating' : 'registering'} participant`;
+          let errorMsg = errData.message || `Error ${isEdit ? 'updating' : 'registering'} participant`;
+          if (errData.errors && Array.isArray(errData.errors)) {
+            errorMsg += ':<br/>' + errData.errors.map(e => `&bull; ${e.message}`).join('<br/>');
+          }
+          errorBox.innerHTML = errorMsg;
           errorBox.style.display = 'block';
         }
       } catch (err) {

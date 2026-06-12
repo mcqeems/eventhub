@@ -17,7 +17,11 @@ document
         window.location.href = '/sign-in';
       } else {
         const errBox = document.getElementById('errorBox');
-        errBox.textContent = data.message || 'Registration failed';
+        let errorMsg = data.message || 'Registration failed';
+        if (data.errors && Array.isArray(data.errors)) {
+          errorMsg += ':<br/>' + data.errors.map(e => `&bull; ${e.message}`).join('<br/>');
+        }
+        errBox.innerHTML = errorMsg;
         errBox.style.display = 'block';
       }
     } catch (err) {

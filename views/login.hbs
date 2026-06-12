@@ -3,11 +3,11 @@
 <form id="loginForm">
   <div class="form-group">
     <label>Username</label>
-    <input type="text" id="username" class="text-input" required />
+    <input type="text" id="username" class="text-input" minlength="4" maxlength="255" required />
   </div>
   <div class="form-group">
     <label>Password</label>
-    <input type="password" id="password" class="text-input" required />
+    <input type="password" id="password" class="text-input" minlength="4" maxlength="255" required />
   </div>
   <button type="submit" class="button-primary">Sign In</button>
   <a href="/sign-up" class="button-tab" style="margin-left: 16px;">Create Account</a>
