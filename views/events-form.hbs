@@ -6,7 +6,6 @@
 <div class="section-divider" style="margin-bottom: var(--spacing-xl);">
   <div id="errorBox" class="message-box message-error"></div>
   <form id="eventForm" style="margin-bottom: var(--spacing-lg);">
-    <!-- We inject a hidden field if edit mode to store the ID -->
     {{#if isEdit}}
       <input type="hidden" id="isEdit" value="true" />
     {{else}}

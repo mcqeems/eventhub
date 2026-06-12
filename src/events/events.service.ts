@@ -84,6 +84,35 @@ export class EventsService {
     };
   }
 
+  // async findOneByQuery(
+  //   id: number,
+  // ): Promise<{ status: number; message: string; data: events }> {
+  //   const event = await this.prismaService.events.findUnique({
+  //     where: {
+  //       id: id,
+  //     },
+  //     include: {
+  //       _count: {
+  //         select: {
+  //           participants: true,
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   if (!event) {
+  //     throw new NotFoundException(
+  //       `The corresponding event with id ${id} is not found.`,
+  //     );
+  //   }
+
+  //   return {
+  //     status: 200,
+  //     message: `Event successfully fetched with id ${id}.`,
+  //     data: event,
+  //   };
+  // }
+
   async update(
     id: number,
     updateEventDto: UpdateEventDto,

@@ -1,5 +1,4 @@
 async function loadEventDetail() {
-  // Extract ID from the URL path: /events/:id
   const pathParts = window.location.pathname.split('/');
   const eventId = pathParts[pathParts.length - 1];
   const container = document.getElementById('eventDetailContainer');

@@ -1,4 +1,3 @@
-/* Buttons */
 button,
 .button-primary,
 .button-secondary,
@@ -62,7 +61,6 @@ button,
   cursor: not-allowed;
 }
 
-/* Forms */
 .text-input,
 .textarea {
   background-color: var(--colors-surface-soft);
@@ -95,7 +93,6 @@ button,
   font-weight: 700;
 }
 
-/* Badges */
 .badge-news {
   background-color: var(--colors-surface-dark);
   color: var(--colors-on-dark);
@@ -114,7 +111,6 @@ button,
   display: block;
 }
 
-/* Specific Components */
 .hero-tui-mockup {
   background-color: var(--colors-surface-dark);
   color: var(--colors-on-dark);
@@ -161,7 +157,6 @@ button,
   gap: var(--spacing-md);
 }
 
-/* Error/Success Messages */
 .message-box {
   padding: var(--spacing-sm) var(--spacing-md);
   margin-bottom: var(--spacing-md);

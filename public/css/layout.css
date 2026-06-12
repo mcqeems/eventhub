@@ -1,4 +1,3 @@
-/* Base structural classes */
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -53,7 +52,7 @@
   color: var(--colors-mute);
 }
 
-/* Panel Layout Utilities */
+/* Panel Layout */
 .panel-layout {
   display: flex;
   min-height: 100vh;
@@ -78,13 +77,14 @@
   padding: var(--spacing-xxl) var(--spacing-xl);
 }
 
-/* Table Utilities for Admin */
+/* Table for Admin */
 table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: var(--spacing-xl);
 }
-th, td {
+th,
+td {
   text-align: left;
   padding: var(--spacing-md);
   border-bottom: 1px solid var(--colors-hairline);
@@ -92,6 +92,7 @@ th, td {
 th {
   font-weight: 700;
 }
-th:last-child, td:last-child {
+th:last-child,
+td:last-child {
   text-align: right;
 }

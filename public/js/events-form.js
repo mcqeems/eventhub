@@ -5,16 +5,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (isEdit) {
     const pathParts = window.location.pathname.split('/');
     eventId = pathParts[pathParts.length - 1];
-    
-    // Fetch and populate
+
     try {
       const res = await fetch(`/api/events/${eventId}`);
       const data = await res.json();
       const ev = data.data || data;
-      
+
       if (ev) {
         document.getElementById('eventName').value = ev.name;
-        // Format date to YYYY-MM-DD
         const d = new Date(ev.date);
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, '0');
@@ -24,7 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('eventMax').value = ev.max || '';
         document.getElementById('eventMin').value = ev.min || 1;
       }
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   }
@@ -35,14 +33,14 @@ document.addEventListener('DOMContentLoaded', async () => {
       name: document.getElementById('eventName').value,
       date: document.getElementById('eventDate').value,
       location: document.getElementById('eventLocation').value,
-      min: parseInt(document.getElementById('eventMin').value)
+      min: parseInt(document.getElementById('eventMin').value),
     };
-    
+
     const maxVal = document.getElementById('eventMax').value;
     if (maxVal) {
       payload.max = parseInt(maxVal);
     }
-    
+
     const url = isEdit ? `/api/events/${eventId}` : '/api/events';
     const method = isEdit ? 'PATCH' : 'POST';
 
@@ -50,18 +48,19 @@ document.addEventListener('DOMContentLoaded', async () => {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
-      
-      if(res.ok) {
+
+      if (res.ok) {
         window.location.href = '/panel/events';
       } else {
         const errData = await res.json();
         const errorBox = document.getElementById('errorBox');
-        errorBox.textContent = errData.message || `Error ${isEdit ? 'updating' : 'creating'} event`;
+        errorBox.textContent =
+          errData.message || `Error ${isEdit ? 'updating' : 'creating'} event`;
         errorBox.style.display = 'block';
       }
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     }
   });

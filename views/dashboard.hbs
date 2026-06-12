@@ -1,10 +1,45 @@
 <h1 class="typography-display-xl" style="margin-bottom: var(--spacing-xl);">Dashboard</h1>
-<p class="typography-body-md" style="margin-bottom: var(--spacing-section);">Welcome to the EventHub Admin Panel. Use the sidebar to manage your Events and Participants.</p>
 
-<div class="list-row">
-  <span>[x]</span>
-  <div>
-    <strong>System Status</strong>
-    <p class="typography-body-md">All systems operational.</p>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl);">
+  <div style="background-color: var(--colors-surface-soft); padding: var(--spacing-lg); border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm);">
+    <h3 class="typography-heading-md" style="color: var(--colors-mute); margin-bottom: var(--spacing-sm);">Total Events</h3>
+    <p id="stat-total-events" class="typography-display-xl">...</p>
+  </div>
+  <div style="background-color: var(--colors-surface-soft); padding: var(--spacing-lg); border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm);">
+    <h3 class="typography-heading-md" style="color: var(--colors-mute); margin-bottom: var(--spacing-sm);">Total Participants</h3>
+    <p id="stat-total-participants" class="typography-display-xl">...</p>
   </div>
 </div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); padding-bottom: var(--spacing-lg); border-bottom: 1px solid var(--colors-hairline);">
+  <div style="background-color: var(--colors-canvas); padding: var(--spacing-md); border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm);">
+    <h2 class="typography-heading-md" style="margin-bottom: var(--spacing-md); text-align: center;">Participants per Event</h2>
+    <div style="position: relative; height: 300px; display: flex; justify-content: center;">
+      <canvas id="pieChart"></canvas>
+    </div>
+  </div>
+  <div style="background-color: var(--colors-canvas); padding: var(--spacing-md); border: 1px solid var(--colors-hairline); border-radius: var(--rounded-sm);">
+    <h2 class="typography-heading-md" style="margin-bottom: var(--spacing-md); text-align: center;">System Overview</h2>
+    <div style="position: relative; height: 300px; display: flex; justify-content: center;">
+      <canvas id="barChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-lg);">
+  <div>
+    <h2 class="typography-heading-md" style="margin-bottom: var(--spacing-md);">Recently Added Events</h2>
+    <div id="recent-events-list">
+      <p class="typography-body-md" style="color: var(--colors-mute);">Loading...</p>
+    </div>
+  </div>
+  <div>
+    <h2 class="typography-heading-md" style="margin-bottom: var(--spacing-md);">Recent Participants</h2>
+    <div id="recent-participants-list">
+      <p class="typography-body-md" style="color: var(--colors-mute);">Loading...</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/js/dashboard.js"></script>

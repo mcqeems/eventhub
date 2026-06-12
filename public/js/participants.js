@@ -3,9 +3,9 @@ async function fetchParticipants() {
   const data = await res.json();
   const tbody = document.querySelector('#participantsTable tbody');
   tbody.innerHTML = '';
-  
-  if(data.data) {
-    data.data.forEach(p => {
+
+  if (data.data) {
+    data.data.forEach((p) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${p.id}</td>
@@ -14,7 +14,7 @@ async function fetchParticipants() {
         <td>${p.institusi}</td>
         <td>${p.jurusan}</td>
         <td>${p.semester}</td>
-        <td>${p.event_id}</td>
+        <td>${p.events.name}</td>
         <td>
           <a href="/panel/participants/${p.id}" class="button-primary" style="margin-right: 8px;">View</a>
           <a href="/panel/participants/edit/${p.id}" class="button-secondary" style="margin-right: 8px;">Update</a>
@@ -27,7 +27,7 @@ async function fetchParticipants() {
 }
 
 async function deleteParticipant(id) {
-  if(!confirm('Are you sure you want to delete this participant?')) return;
+  if (!confirm('Are you sure you want to delete this participant?')) return;
   await fetch(`/api/participants/${id}`, { method: 'DELETE' });
   fetchParticipants();
 }

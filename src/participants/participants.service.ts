@@ -48,7 +48,11 @@ export class ParticipantsService {
     message: string;
     data: participants[];
   }> {
-    const participantList = await this.prismaService.participants.findMany();
+    const participantList = await this.prismaService.participants.findMany({
+      include: {
+        events: true,
+      },
+    });
 
     return {
       status: 200,
@@ -63,6 +67,9 @@ export class ParticipantsService {
     const participant = await this.prismaService.participants.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        events: true,
       },
     });
 

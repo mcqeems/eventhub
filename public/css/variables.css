@@ -1,5 +1,4 @@
 :root {
-  /* Colors - Brand & Surface */
   --colors-ink: #201d1d;
   --colors-ink-deep: #0f0000;
   --colors-canvas: #fdfcfc;
@@ -10,7 +9,6 @@
   --colors-hairline: rgba(15, 0, 0, 0.12);
   --colors-hairline-strong: #646262;
 
-  /* Colors - Text */
   --colors-charcoal: #302c2c;
   --colors-body: #424245;
   --colors-mute: #646262;
@@ -19,7 +17,6 @@
   --colors-on-primary: #fdfcfc;
   --colors-on-dark: #fdfcfc;
 
-  /* Colors - Semantic */
   --colors-accent: #007aff;
   --colors-accent-hover: #0056b3;
   --colors-accent-active: #004085;
@@ -31,7 +28,6 @@
   --colors-warning-active: #995f06;
   --colors-success: #30d158;
 
-  /* Spacing */
   --spacing-xxs: 1px;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
@@ -41,7 +37,6 @@
   --spacing-xxl: 32px;
   --spacing-section: 96px;
 
-  /* Border Radius */
   --rounded-none: 0px;
   --rounded-sm: 4px;
   --rounded-full: 9999px;
