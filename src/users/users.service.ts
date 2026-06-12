@@ -5,10 +5,10 @@ import { Prisma } from 'src/generated/prisma/client';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async findOne(username: string): Promise<users | undefined> {
-    const data = await this.prisma.users.findUnique({
+    const data = await this.prismaService.users.findUnique({
       where: {
         username: username,
       },
@@ -17,7 +17,7 @@ export class UsersService {
   }
 
   async findOneById(id: number): Promise<users | undefined> {
-    const data = await this.prisma.users.findUnique({
+    const data = await this.prismaService.users.findUnique({
       where: {
         id: id,
       },
@@ -30,7 +30,7 @@ export class UsersService {
     password: string,
   ): Promise<users | undefined> {
     try {
-      const data = await this.prisma.users.create({
+      const data = await this.prismaService.users.create({
         data: {
           username: username,
           password: password,

@@ -6,8 +6,10 @@ import {
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { HashingService } from './hashing/hashing.service';
-import { users } from '../generated/prisma/client';
 import { Response } from 'express';
+import { SignUpDto } from './dto/sign-up.dto';
+import { SignInDto } from './dto/sign-in.dto';
+import { users } from '../generated/prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -18,24 +20,23 @@ export class AuthService {
   ) {}
 
   async signIn(
-    username: string,
-    password: string,
+    signInDto: SignInDto,
     response: Response,
   ): Promise<{
     status: number;
     message: string;
-    data: { user: users; accessToken: string };
+    data: { user: SignInDto; accessToken: string };
   }> {
-    const user = await this.usersService.findOne(username);
+    const user = await this.usersService.findOne(signInDto.username);
 
     if (!user) {
       throw new NotFoundException(
-        `User with username ${username} doesn't exist.`,
+        `User with username ${signInDto.username} doesn't exist.`,
       );
     }
 
     const auth = await this.hashingService.comparePassword(
-      password,
+      signInDto.password,
       user.password,
     );
 
@@ -63,21 +64,22 @@ export class AuthService {
     };
   }
 
-  async signUp(
-    username: string,
-    password: string,
-    secretKey: string,
-  ): Promise<{
+  async signUp(signUpDto: SignUpDto): Promise<{
     status: number;
     message: string;
     data: { user: users };
   }> {
-    if (secretKey !== process.env.SECRET_KEY) {
+    if (signUpDto.secretKey !== process.env.SECRET_KEY) {
       throw new UnauthorizedException('Secret Key is incorrect.');
     }
 
-    const hashPassword = await this.hashingService.hashPassword(password);
-    const user = await this.usersService.createOne(username, hashPassword);
+    const hashPassword = await this.hashingService.hashPassword(
+      signUpDto.password,
+    );
+    const user = await this.usersService.createOne(
+      signUpDto.username,
+      hashPassword,
+    );
 
     if (!user || user === undefined) {
       throw new NotFoundException(
