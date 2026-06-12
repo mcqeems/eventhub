@@ -10,7 +10,7 @@ describe('EventsController', () => {
   beforeEach(async () => {
     eventsService = {
       create: jest.fn().mockResolvedValue({ status: 201, message: 'OK', data: {} }),
-      findAll: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: [] }),
+      findAllByQuery: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: [] }),
       findOne: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: {} }),
       update: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: {} }),
       remove: jest.fn().mockResolvedValue({ status: 200, message: 'OK' }),
@@ -32,8 +32,8 @@ describe('EventsController', () => {
   });
 
   it('should call eventsService endpoints', async () => {
-    await controller.findAll();
-    expect(eventsService.findAll).toHaveBeenCalled();
+    await controller.findAll(undefined, undefined, undefined);
+    expect(eventsService.findAllByQuery).toHaveBeenCalledWith(undefined, undefined, undefined);
     
     await controller.findOne('1');
     expect(eventsService.findOne).toHaveBeenCalledWith(1);

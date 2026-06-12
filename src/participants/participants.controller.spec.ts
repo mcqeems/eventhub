@@ -10,7 +10,7 @@ describe('ParticipantsController', () => {
   beforeEach(async () => {
     participantsService = {
       create: jest.fn().mockResolvedValue({ status: 201, message: 'OK', data: {} }),
-      findAll: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: [] }),
+      findAllByQuery: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: [] }),
       findOne: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: {} }),
       update: jest.fn().mockResolvedValue({ status: 200, message: 'OK', data: {} }),
       remove: jest.fn().mockResolvedValue({ status: 200, message: 'OK' }),
@@ -32,8 +32,8 @@ describe('ParticipantsController', () => {
   });
 
   it('should call participantsService endpoints', async () => {
-    await controller.findAll();
-    expect(participantsService.findAll).toHaveBeenCalled();
+    await controller.findAll(undefined, undefined, undefined, undefined, undefined, undefined);
+    expect(participantsService.findAllByQuery).toHaveBeenCalledWith(undefined, undefined, undefined, undefined, undefined, undefined);
     
     await controller.findOne('1');
     expect(participantsService.findOne).toHaveBeenCalledWith(1);
