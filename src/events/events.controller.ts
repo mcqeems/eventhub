@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { type CreateEventDto, CreateEventSchema } from './dto/create-event.dto';
@@ -25,8 +26,12 @@ export class EventsController {
   }
 
   @Get()
-  findAll() {
-    return this.eventsService.findAll();
+  findAll(
+    @Query('name') name: string,
+    @Query('date') date: string,
+    @Query('location') location: string,
+  ) {
+    return this.eventsService.findAllByQuery(name, date, location);
   }
 
   @Get(':id')

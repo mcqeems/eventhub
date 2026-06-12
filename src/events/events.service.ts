@@ -33,27 +33,28 @@ export class EventsService {
     };
   }
 
-  async findAll(): Promise<{
-    status: number;
-    message: string;
-    data: events[];
-  }> {
-    const event = await this.prismaService.events.findMany({
-      include: {
-        _count: {
-          select: {
-            participants: true,
-          },
-        },
-      },
-    });
+  // Search all without filter
+  // async findAll(): Promise<{
+  //   status: number;
+  //   message: string;
+  //   data: events[];
+  // }> {
+  //   const event = await this.prismaService.events.findMany({
+  //     include: {
+  //       _count: {
+  //         select: {
+  //           participants: true,
+  //         },
+  //       },
+  //     },
+  //   });
 
-    return {
-      status: 200,
-      message: 'Events successfully fetched.',
-      data: event,
-    };
-  }
+  //   return {
+  //     status: 200,
+  //     message: 'Events successfully fetched.',
+  //     data: event,
+  //   };
+  // }
 
   async findOne(
     id: number,
@@ -84,34 +85,31 @@ export class EventsService {
     };
   }
 
-  // async findOneByQuery(
-  //   id: number,
-  // ): Promise<{ status: number; message: string; data: events }> {
-  //   const event = await this.prismaService.events.findUnique({
-  //     where: {
-  //       id: id,
-  //     },
-  //     include: {
-  //       _count: {
-  //         select: {
-  //           participants: true,
-  //         },
-  //       },
-  //     },
-  //   });
+  async findAllByQuery(
+    name?: string,
+    date?: string,
+    location?: string,
+  ): Promise<{ status: number; message: string; data: events[] }> {
+    const event = await this.prismaService.events.findMany({
+      where: {
+        name: name ? { contains: name } : undefined,
+        date: date ? { equals: new Date(date) } : undefined,
+        location: location ? { contains: location } : undefined,
+      },
+    });
 
-  //   if (!event) {
-  //     throw new NotFoundException(
-  //       `The corresponding event with id ${id} is not found.`,
-  //     );
-  //   }
+    if (!event) {
+      throw new NotFoundException(
+        `The corresponding event with that query is not found.`,
+      );
+    }
 
-  //   return {
-  //     status: 200,
-  //     message: `Event successfully fetched with id ${id}.`,
-  //     data: event,
-  //   };
-  // }
+    return {
+      status: 200,
+      message: `Event successfully fetched with those query.`,
+      data: event,
+    };
+  }
 
   async update(
     id: number,
