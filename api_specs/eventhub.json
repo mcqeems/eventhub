@@ -1,45 +1,73 @@
 {
   "info": {
+    "_postman_id": "bc71ceea-50b2-4758-b940-044b699950fa",
     "name": "eventhub",
-    "description": null,
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42082004"
   },
   "item": [
     {
       "name": "Auth",
       "item": [
         {
-          "name": "sign-in",
+          "name": "sign-up",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful response\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "let randomUser = \"user_\" + pm.variables.replaceIn('{{$randomInt}}');",
+                  "let randomPass = \"pass_\" + pm.variables.replaceIn('{{$randomInt}}');",
+                  "pm.collectionVariables.set(\"username\", randomUser);",
+                  "pm.collectionVariables.set(\"password\", randomPass);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
-            "method": "POST",
-            "header": [],
             "auth": {
               "type": "noauth"
             },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/auth/sign-in",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "auth",
-                "sign-in"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"siapapun\",\n  \"password\": \"apaajalah123\"\n}",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\",\n  \"secretKey\": \"{{secret_key}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{url}}api/auth/sign-up",
+              "host": [
+                "{{url}}api"
+              ],
+              "path": [
+                "auth",
+                "sign-up"
+              ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "sign-in",
           "event": [
             {
               "listen": "test",
@@ -54,43 +82,42 @@
                   "    console.log(\"Access token saved to collection variables\");",
                   "}"
                 ],
-                "type": "text/javascript"
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
               }
             }
-          ]
-        },
-        {
-          "name": "sign-up",
+          ],
           "request": {
-            "method": "POST",
-            "header": [],
             "auth": {
               "type": "noauth"
             },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/auth/sign-up",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "auth",
-                "sign-up"
-              ],
-              "query": [],
-              "variable": []
-            },
+            "method": "POST",
+            "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"username\": \"qeem\",\n  \"password\": \"apaajalah123\",\n  \"secretKey\": \"34f76c1d6f6d0bae8f0adc0ec4140da9311a83bcc3af29200a89b59eeb627180\"\n}",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{url}}api/auth/sign-in",
+              "host": [
+                "{{url}}api"
+              ],
+              "path": [
+                "auth",
+                "sign-in"
+              ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "sign-out",
           "event": [
             {
               "listen": "test",
@@ -103,13 +130,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "sign-out",
+          ],
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -120,34 +142,20 @@
                 }
               ]
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
               "raw": "{{url}}api/auth/sign-out",
-              "protocol": "",
               "host": [
                 "{{url}}api"
               ],
               "path": [
                 "auth",
                 "sign-out"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Successful response\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
+          "response": []
         }
       ]
     },
@@ -156,34 +164,6 @@
       "item": [
         {
           "name": "me",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{access_token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/users/me",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "users",
-                "me"
-              ],
-              "query": [],
-              "variable": []
-            }
-          },
           "event": [
             {
               "listen": "test",
@@ -196,7 +176,32 @@
                 "type": "text/javascript"
               }
             }
-          ]
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}api/users/me",
+              "host": [
+                "{{url}}api"
+              ],
+              "path": [
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -205,33 +210,6 @@
       "item": [
         {
           "name": "Find All",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{access_token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/events",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "events"
-              ],
-              "query": [],
-              "variable": []
-            }
-          },
           "event": [
             {
               "listen": "test",
@@ -244,13 +222,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Find All Query",
+          ],
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -261,14 +234,53 @@
                 }
               ]
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
-              "raw": "{{url}}events?name=seminar",
-              "protocol": "",
+              "raw": "{{url}}api/events",
               "host": [
-                "{{url}}events?name=seminar"
+                "{{url}}api"
               ],
-              "path": [],
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find All Query",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful response\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}events?name=seminar/?name=seminar&date=2026-06-13&location=meeting",
+              "host": [
+                "{{url}}events"
+              ],
               "query": [
                 {
                   "key": "name",
@@ -282,10 +294,13 @@
                   "key": "location",
                   "value": "meeting"
                 }
-              ],
-              "variable": []
+              ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "Find One",
           "event": [
             {
               "listen": "test",
@@ -298,13 +313,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Find One",
+          ],
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -315,73 +325,23 @@
                 }
               ]
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
-              "raw": "{{url}}api/events/2",
-              "protocol": "",
+              "raw": "{{url}}api/events/{{event_id}}",
               "host": [
                 "{{url}}api"
               ],
               "path": [
                 "events",
                 "{{event_id}}"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Successful response\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
+          "response": []
         },
         {
           "name": "Create",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{access_token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/events",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "events"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Konser tepe46\",\n  \"date\": \"2026-06-12\",\n  \"location\": \"Meeting Hall\",\n//   \"max\": 200, Optional\n  \"min\": 10\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
           "event": [
             {
               "listen": "test",
@@ -398,13 +358,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Update",
+          ],
           "request": {
-            "method": "PATCH",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -415,20 +370,57 @@
                 }
               ]
             },
-            "description": "",
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Konser tepe46\",\n  \"date\": \"2026-06-12\",\n  \"location\": \"Meeting Hall\",\n//   \"max\": 200, Optional\n  \"min\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "{{url}}api/events/1",
-              "protocol": "",
+              "raw": "{{url}}api/events",
               "host": [
                 "{{url}}api"
               ],
               "path": [
-                "events",
-                "{{event_id}}"
-              ],
-              "query": [],
-              "variable": []
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful response\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
             },
+            "method": "PATCH",
+            "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Konser anak\"\n//   \"date\": \"2026-06-12\",\n//   \"location\": \"Meeting Hall\",\n//   \"max\": 200, Optional\n//   \"min\": 10\n}",
@@ -437,21 +429,19 @@
                   "language": "json"
                 }
               }
+            },
+            "url": {
+              "raw": "{{url}}api/events/{{event_id}}",
+              "host": [
+                "{{url}}api"
+              ],
+              "path": [
+                "events",
+                "{{event_id}}"
+              ]
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Successful response\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
+          "response": []
         }
       ]
     },
@@ -460,33 +450,6 @@
       "item": [
         {
           "name": "Find All",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{access_token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/participants",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "participants"
-              ],
-              "query": [],
-              "variable": []
-            }
-          },
           "event": [
             {
               "listen": "test",
@@ -499,13 +462,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Find All Query",
+          ],
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -516,15 +474,55 @@
                 }
               ]
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
-              "raw": "{{url}}api/participants?name=Jokowi",
-              "protocol": "",
+              "raw": "{{url}}api/participants",
               "host": [
                 "{{url}}api"
               ],
               "path": [
-                "participants?name=Jokowi"
+                "participants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Find All Query",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful response\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}api/participants?name=Jokowi?name=Jokowi&email=apaajalah@gmail.com&institusi=unida&semester=4&event_id=3",
+              "host": [
+                "{{url}}api"
+              ],
+              "path": [
+                "participants"
               ],
               "query": [
                 {
@@ -547,10 +545,13 @@
                   "key": "event_id",
                   "value": "3"
                 }
-              ],
-              "variable": []
+              ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "Find One",
           "event": [
             {
               "listen": "test",
@@ -563,13 +564,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Find One",
+          ],
           "request": {
-            "method": "GET",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -580,73 +576,23 @@
                 }
               ]
             },
-            "description": "",
+            "method": "GET",
+            "header": [],
             "url": {
-              "raw": "{{url}}api/participants/1",
-              "protocol": "",
+              "raw": "{{url}}api/participants/{{participant_id}}",
               "host": [
                 "{{url}}api"
               ],
               "path": [
                 "participants",
                 "{{participant_id}}"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
           },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Successful response\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
+          "response": []
         },
         {
           "name": "Create",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{access_token}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "description": "",
-            "url": {
-              "raw": "{{url}}api/participants",
-              "protocol": "",
-              "host": [
-                "{{url}}api"
-              ],
-              "path": [
-                "participants"
-              ],
-              "query": [],
-              "variable": []
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"name\": \"Joko\",\n  \"email\": \"joko@email.com\",\n  \"institusi\": \"UNIDA\",\n  \"jurusan\": \"Teknik Informatika\",\n  \"semester\": 4,\n  \"event_id\": {{event_id}}\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
           "event": [
             {
               "listen": "test",
@@ -663,13 +609,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Update",
+          ],
           "request": {
-            "method": "PATCH",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -680,20 +621,57 @@
                 }
               ]
             },
-            "description": "",
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Joko\",\n  \"email\": \"joko@email.com\",\n  \"institusi\": \"UNIDA\",\n  \"jurusan\": \"Teknik Informatika\",\n  \"semester\": 4,\n  \"event_id\": {{event_id}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
             "url": {
-              "raw": "{{url}}api/participants/1",
-              "protocol": "",
+              "raw": "{{url}}api/participants",
               "host": [
                 "{{url}}api"
               ],
               "path": [
-                "participants",
-                "{{participant_id}}"
-              ],
-              "query": [],
-              "variable": []
+                "participants"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful response\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
             },
+            "method": "PATCH",
+            "header": [],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"name\": \"Joko\"\n//   \"email\": \"joko@email.com\",\n//   \"institusi\": \"UNIDA\",\n//   \"jurusan\": \"Teknik Informatika\",\n//   \"semester\": 4,\n//   \"event_id\": 2\n}",
@@ -702,52 +680,22 @@
                   "language": "json"
                 }
               }
-            }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Successful response\", function () {",
-                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
-                  "});"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "Delete",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{access_token}}",
-                  "type": "string"
-                }
-              ]
             },
-            "description": "",
             "url": {
-              "raw": "{{url}}api/participants/3",
-              "protocol": "",
+              "raw": "{{url}}api/participants/{{participant_id}}",
               "host": [
                 "{{url}}api"
               ],
               "path": [
                 "participants",
                 "{{participant_id}}"
-              ],
-              "query": [],
-              "variable": []
+              ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "Delete",
           "event": [
             {
               "listen": "test",
@@ -760,13 +708,8 @@
                 "type": "text/javascript"
               }
             }
-          ]
-        },
-        {
-          "name": "Delete Event",
+          ],
           "request": {
-            "method": "DELETE",
-            "header": [],
             "auth": {
               "type": "bearer",
               "bearer": [
@@ -777,21 +720,23 @@
                 }
               ]
             },
-            "description": "",
+            "method": "DELETE",
+            "header": [],
             "url": {
-              "raw": "{{url}}api/events/1",
-              "protocol": "",
+              "raw": "{{url}}api/participants/{{participant_id}}",
               "host": [
                 "{{url}}api"
               ],
               "path": [
-                "events",
-                "{{event_id}}"
-              ],
-              "query": [],
-              "variable": []
+                "participants",
+                "{{participant_id}}"
+              ]
             }
           },
+          "response": []
+        },
+        {
+          "name": "Delete Event",
           "event": [
             {
               "listen": "test",
@@ -804,7 +749,32 @@
                 "type": "text/javascript"
               }
             }
-          ]
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}api/events/{{event_id}}",
+              "host": [
+                "{{url}}api"
+              ],
+              "path": [
+                "events",
+                "{{event_id}}"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
@@ -827,6 +797,16 @@
     },
     {
       "key": "participant_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "password",
       "value": "",
       "type": "string"
     }
