@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
@@ -25,12 +26,8 @@ export class EventsService {
       },
     });
 
-    if (!event) {
-      throw new InternalServerErrorException();
-    }
-
     return {
-      status: 200,
+      status: 201,
       message: 'Event successfully created.',
       data: event,
     };
@@ -42,10 +39,6 @@ export class EventsService {
     data: events[];
   }> {
     const event = await this.prismaService.events.findMany();
-
-    if (!event) {
-      throw new InternalServerErrorException();
-    }
 
     return {
       status: 200,
@@ -80,44 +73,55 @@ export class EventsService {
     id: number,
     updateEventDto: UpdateEventDto,
   ): Promise<{ status: number; message: string; data: events }> {
-    const event = await this.prismaService.events.update({
-      where: {
-        id: id,
-      },
-      data: {
-        name: updateEventDto?.name,
-        location: updateEventDto?.location,
-        date: updateEventDto?.date,
-        max: updateEventDto?.max,
-        min: updateEventDto?.min,
-      },
-    });
+    try {
+      const event = await this.prismaService.events.update({
+        where: {
+          id: id,
+        },
+        data: {
+          name: updateEventDto?.name,
+          location: updateEventDto?.location,
+          date: updateEventDto?.date,
+          max: updateEventDto?.max,
+          min: updateEventDto?.min,
+        },
+      });
 
-    if (!event) {
-      throw new InternalServerErrorException();
+      return {
+        status: 200,
+        message: `Event successfully updated with id ${id}`,
+        data: event,
+      };
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`Event with id ${id} not found.`);
+      }
+      throw new InternalServerErrorException(error.message);
     }
-
-    return {
-      status: 200,
-      message: `Event successfully updated with id ${id}`,
-      data: event,
-    };
   }
 
-  async remove(id: number): Promise<{ status: number; message }> {
-    const event = await this.prismaService.events.delete({
-      where: {
-        id: id,
-      },
-    });
+  async remove(id: number): Promise<{ status: number; message: string }> {
+    try {
+      await this.prismaService.events.delete({
+        where: {
+          id: id,
+        },
+      });
 
-    if (!event) {
-      throw new InternalServerErrorException();
+      return {
+        status: 200,
+        message: `Event successfully deleted with id ${id}`,
+      };
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`Event with id ${id} not found.`);
+      }
+      if (error.code === 'P2003') {
+        throw new BadRequestException(
+          `Cannot delete event with id ${id} because it still has participants tied to it.`,
+        );
+      }
+      throw new InternalServerErrorException(error.message);
     }
-
-    return {
-      status: 200,
-      message: `Event successfully deleted with id ${id}`,
-    };
   }
 }
